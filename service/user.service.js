@@ -4,22 +4,30 @@ const path = require('path');
 const usersPath = path.join(process.cwd(), 'dataBase', 'usersMass.json');
 
 module.exports = {
-    findUsers: async () => {
+    findUsers: async (info) => {
         const users = await fs.readFile(usersPath);
-
-        return JSON.parse(users.toString());
+        const parse = JSON.parse(users.toString());
+        return parse.filter(value => Object.keys(info).every(e => info[e] === value[e]))
     },
 
-    findUserById: async (userID)=>{
+    findUserById: async (userID) => {
         const users = await fs.readFile(usersPath);
-
-        return JSON.parse(users)[userID];
+        const parse = JSON.parse(users.toString());
+        return (parse)[userID];
     },
 
     createUser: async (userObject) => {
         const users = await fs.readFile(usersPath);
-        JSON.parse(users.toString()).push(userObject);
+        const parse = JSON.parse(users.toString());
+        parse.push(userObject);
+        await fs.writeFile(usersPath, JSON.stringify(parse));
+    },
 
-        await fs.writeFile(usersPath, JSON.stringify(users));
+    deleteUser: async (id) => {
+        const users = await fs.readFile(usersPath);
+        const parse = JSON.parse(users.toString());
+
+        parse.splice(id,1);
+        await fs.writeFile(usersPath, JSON.stringify(parse))
     }
 }

@@ -27,5 +27,10 @@ module.exports = {
     USER_IS_CREATED:{
         en:'User is Created!',
         ua:'Користувача створено'
+    },
+
+    USER_WAS_DELETED:{
+        en:'User deleted',
+        ua:'Користувача видалено'
     }
 }

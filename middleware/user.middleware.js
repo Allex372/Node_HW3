@@ -1,6 +1,8 @@
-const errorCodes = require('../constant/errorCodes.enum')
-const errorMessages = require('../error/error.messages')
-const { findUserById } = require('../service/user.service')
+const errorCodes = require('../constant/errorCodes.enum');
+const errorMessages = require('../error/error.messages');
+const { findUserById } = require('../service/user.service');
+const { deleteUser } = require('../service/user.service')
+
 
 module.exports = {
     checkIsIdValid : (req, res, next)=>{
@@ -18,13 +20,25 @@ module.exports = {
         }
     },
 
+    rewriteUserID: async (req, res, next) => {
+        try {
+            const { language = 'ua' } = req.body;
+            const { userId } = req.params;
+            const foundUser = await deleteUser(+userId);
+
+            req.user = foundUser;
+
+            next()
+        } catch (e) {
+            res.status(errorCodes.BAD_REQUEST).json(e.message);
+        }
+    },
+
     ifUserExists: async (req, res, next) => {
         try {
             const { language = 'ua' } = req.body;
             const { userId } = req.params;
-            console.log(userId)
             const foundUser = await findUserById(+userId);
-
             if (!foundUser) {
                 throw new Error(errorMessages.USER_NOT_FOUND[language]);
             }
