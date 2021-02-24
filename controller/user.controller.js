@@ -1,6 +1,6 @@
-const userService = require('../service/user.service')
-const error = require('../constant/errorCodes.enum')
-const errorMessage = require('../error/error.messages')
+const userService = require('../service/user.service');
+const error = require('../constant/errorCodes.enum');
+const errorMessage = require('../error/error.messages');
 
 module.exports = {
     getAllUsers: async (req, res) => {
@@ -10,7 +10,7 @@ module.exports = {
 
             res.json(users);
         } catch (e) {
-            res.status(error.BAD_REQUEST).json(e.message)
+            res.status(error.BAD_REQUEST).json(e.message);
         }
     },
 
@@ -18,19 +18,17 @@ module.exports = {
         try {
             res.json(req.user);
         } catch (e) {
-            res.status(error.BAD_REQUEST).json(e.message)
+            res.status(error.BAD_REQUEST).json(e.message);
         }
-
     },
 
     deleteSingeUser: (req, res) => {
         try {
-
             userService.deleteUser(req.params);
 
             res.status(201).json(errorMessage.USER_WAS_DELETED["ua"]);
         } catch (e) {
-            res.status(error.BAD_REQUEST).json(e.message)
+            res.status(error.BAD_REQUEST).json(e.message);
 
         }
     },
@@ -41,7 +39,7 @@ module.exports = {
 
             res.status(201).json('CreateUsers');
         } catch (e) {
-            res.status(error.BAD_REQUEST).json(e.message)
+            res.status(error.BAD_REQUEST).json(e.message);
         }
     }
 }

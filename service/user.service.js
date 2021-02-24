@@ -7,7 +7,7 @@ module.exports = {
     findUsers: async (info) => {
         const users = await fs.readFile(usersPath);
         const parse = JSON.parse(users.toString());
-        return parse.filter(value => Object.keys(info).every(e => info[e] === value[e]))
+        return parse.filter(value => Object.keys(info).every(e => info[e] === value[e]));
     },
 
     findUserById: async (userID) => {
@@ -27,7 +27,7 @@ module.exports = {
         const users = await fs.readFile(usersPath);
         const parse = JSON.parse(users.toString());
 
-        parse.splice(id,1);
-        await fs.writeFile(usersPath, JSON.stringify(parse))
+        parse.splice(id, 1);
+        await fs.writeFile(usersPath, JSON.stringify(parse));
     }
 }
